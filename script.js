@@ -33,7 +33,11 @@ showPosts();
 //Scroll event
 window.addEventListener('scroll', (e) => {
    //deconstruct
-   const {scrollTop, clientHeight, scrollHeight} = document.documentElement;
+   const {
+      scrollTop,
+      clientHeight,
+      scrollHeight
+   } = document.documentElement;
    //to get scroll height
    let scrollTotal = scrollTop + clientHeight;
    if (scrollTotal >= scrollHeight) {
@@ -44,30 +48,30 @@ window.addEventListener('scroll', (e) => {
 
 //To Show loading with next page within time limit
 function showLoading() {
-  loaderEl.classList.add('show');
-  //to disapper after 1000s
-  setTimeout(() => {
+   loaderEl.classList.add('show');
+   //to disapper after 1000s
+   setTimeout(() => {
       loaderEl.classList.remove('show');
-       //to add page
+      //to add page
       setTimeout(() => {
          page++;
          showPosts();
-      },300);
-  },1000);
+      }, 300);
+   }, 1000);
 }
 
 filterEl.addEventListener('input', (e) => {
    let search = e.target.value.toLowerCase();
    //To get DOM Notes
    let posts = document.querySelectorAll('.post');
-   
+
    posts.forEach(post => {
       let title = post.querySelector('.post-title').innerText.toLowerCase();
-      let body =post.querySelector('.post-body').innerText.toLowerCase();
+      let body = post.querySelector('.post-body').innerText.toLowerCase();
       if (title.indexOf(search) > -1 || body.indexOf(search) > -1) {
          post.style.display = 'flex'
       } else {
          post.style.display = 'none'
       }
-   }) 
+   })
 })
