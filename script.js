@@ -62,14 +62,38 @@ function showLoading() {
 
 filterEl.addEventListener('input', (e) => {
    let search = e.target.value.toLowerCase();
+
+   console.log(search)
+
    //To get DOM Notes
    let posts = document.querySelectorAll('.post');
 
    posts.forEach(post => {
+      //for title
       let title = post.querySelector('.post-title').innerText.toLowerCase();
+      let TitleEL = post.querySelector('.post-title').innerHTML;
+      //for body
       let body = post.querySelector('.post-body').innerText.toLowerCase();
+      let BodyEL = post.querySelector('.post-body').innerHTML;
+      //replace tag
+      let titleString = TitleEL.toString().replace(/(<([^>]+)>)/gi, "");
+      TitleEL = titleString;
+      //replace tag
+      let bodyString = BodyEL.toString().replace(/(<([^>]+)>)/gi, "");
+      BodyEL = bodyString;
+
       if (title.indexOf(search) > -1 || body.indexOf(search) > -1) {
          post.style.display = 'flex'
+         //create pattern
+         //var query = new RegExp("(\\b" + text + "\\b)", "gim");
+         //replace(searchValue, replaceValue)
+         //replace value => function is also OK
+         //match is parameter
+         let newTitle = TitleEL.replace(new RegExp(search, "gi"), (match) => `<mark>${match}</mark>`);
+         post.querySelector('.post-title').innerHTML = newTitle;
+
+         let newBody = BodyEL.replace(new RegExp(search, "gi"), (match) => `<mark>${match}</mark>`);
+         post.querySelector('.post-body').innerHTML = newBody;
       } else {
          post.style.display = 'none'
       }
